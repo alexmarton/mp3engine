@@ -11,26 +11,35 @@ $("#search_link").click(function(){
     $("#search_result").css("display","none");
 
     $.ajax({
+
         type:"POST",
         url:"ajax/test.php",
         data:"dsend="+$("#mp3text").val(),
         beforeSend: function ( xhr ) {
-            alert("sendiiing...");
-            //  $("#loadingDIV").show();
+
+              $("#loadingDIV").show();
         },
         success:function(tresult){
 
-            $("#result_mp3").html(tresult);
-            $("#result_mp3").show(tresult);
+
+
+            var parsedData = JSON.parse(tresult);
+            var newresult = parsedData.email;
+            $("#result_mp3").html(newresult);
+            $("#result_mp3_nume").html(tresult);
+
+
+
+
         },
 
         complete:function (xhr){
             $("#search_result").css("display","block");
-            alert("completee");
+            $("#loadingDIV").hide();
         },
 
         error:function(a,b,c){
-
+           // $("#loadingDIV").hide();
             $("#result_mp3").html("Please check your input text"+b);
 
         }
